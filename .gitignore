@@ -1,0 +1,6 @@
+*.pyc
+*.kate-swp
+.project
+.pydevproject
+.settings
+*.log
