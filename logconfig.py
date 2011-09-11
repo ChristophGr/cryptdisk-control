@@ -4,7 +4,7 @@
 import logging
 import subprocess
 
-logging.basicConfig(format='%(asctime)-15s %(module)s:%(lineno)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(module)s:%(lineno)s %(levelname)s %(message)s')
 logger = logging.getLogger("crypt-control")
 logger.setLevel("DEBUG")
 
