@@ -48,7 +48,7 @@ class TruecryptFileHandler:
 
 def main():
     if not os.path.exists(configfile):
-        write_json_file(configfile, dict(volumes = []))
+        write_json_file(configfile, dict(volumes = dict()))
 
     known = read_json_file(configfile)["volumes"]
     truecryptvolumes = [ x.encode('ascii','replace') for (x,y) in known.iteritems() if y == "truecrypt" ]
