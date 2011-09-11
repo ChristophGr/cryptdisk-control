@@ -13,10 +13,10 @@ from logconfig import logger
 
 def save_truecrypt_device(path):
     content = read_json_file(configfile)
-    content["truecryptvolumes"].append(path)
+    content["volumes"][path] = "truecrypt"
     write_json_file(configfile, content)
 
-def initial_mount(volume):
+def initial_mount(volume, password):
     path = find_unique_dev_path(volume)
     if path == None:
         path = volume
