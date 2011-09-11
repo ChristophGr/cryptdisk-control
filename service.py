@@ -17,7 +17,7 @@ from config import *
 
 def try_get_password():
     if hasX():
-        from xutils import *
+        from xutils import get_password_from_dialog
         logger.info("get password from dialog")
         password = get_password_from_dialog()
         logger.info("read %s from dialog" % password)
@@ -48,7 +48,7 @@ class TruecryptFileHandler:
 
 def main():
     if not os.path.exists(configfile):
-        write_json_file(configfile, dict(truecryptvolumes = []))
+        write_json_file(configfile, dict(volumes = []))
 
     known = read_json_file(configfile)["volumes"]
     truecryptvolumes = [ x.encode('ascii','replace') for (x,y) in known.iteritems() if y == "truecrypt" ]
