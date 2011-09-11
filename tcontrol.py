@@ -7,6 +7,7 @@ import subprocess
 import sys
 import keychain
 from mountwatcher import *
+import getpass
 
 from config import *
 from logconfig import logger
@@ -32,8 +33,7 @@ def main():
         logger.info("creating configfile {}".format(configfile))
         write_json_file(configfile, dict(truecryptvolumes = []))
     reffile = sys.argv[1]
-
-    password = get_password_from_dialog("Enter volume password:")
+    password = getpass.getpass()
     initial_mount(reffile, password)
     logger.info(find_unique_dev_path(reffile))
 
