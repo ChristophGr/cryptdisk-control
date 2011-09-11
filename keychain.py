@@ -14,4 +14,3 @@ class Keychain:
         #result = getpass.getpass()
         #keychain.store_password(volume, result)
     #return result
-        

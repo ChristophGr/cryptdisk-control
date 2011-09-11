@@ -28,4 +28,4 @@ class GnomeKeyringKeychain(Keychain):
             return matches[0].secret
         except gnomekeyring.NoMatchError:
             print "password not found"
-            return None            
+            return None
