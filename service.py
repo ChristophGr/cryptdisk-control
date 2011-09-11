@@ -53,6 +53,7 @@ class LuksHandler:
     def on_delete(self, path):
         subprocess.call(["umount", "/dev/mapper/" + self.name])
         subprocess.call(["cryptsetup", "luksClose", self.name])
+        os.rmdir("/media/" self.name)
 
 def main():
     if not os.path.exists(configfile):
