@@ -79,3 +79,30 @@ def mount_volume(path, password):
     command = ["truecrypt", "-t", "--non-interactive", "--fs-options=user", "--mount", path, "-p", password]
     logger.debug(" ".join(command))
     return subprocess.call(command) == 0
+
+def find_name():
+    base = "luks"
+    i = 0
+    while os.path.exists("/dev/mapper/" + base + str(i)):
+        i = i + 1
+    return base + str(i)
+
+def mount_luks_volume(path, password):
+    logger.info("mounting %s with pw %s" % (path, "****"))
+    if password == None:
+        logger.error("cannot mount volume, missing password")
+        return False
+    name = find_name()
+    luksopencommand = ["cryptsetup", "luksOpen", path, name]
+    subprocess.call(luksopencommand)
+    os.mkdir("/media/" + name)
+    mountcommand = ["mount", "/dev/mapper/" + name, "/media/" + name ]
+    subprocess.call(mountcommand)
+    return name
+
+
+def main():
+    print find_name()
+
+if __name__ == "__main__":
+    main()

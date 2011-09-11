@@ -46,6 +46,14 @@ class TruecryptFileHandler:
         subprocess.call(["truecrypt", "-d", path])
         logger.info("deleted path %s " % path)
 
+class LuksHandler:
+    def on_create(self, path):
+        password = keychain.get_password(path)
+        self.name = mount_luks_volume(path, password)
+    def on_delete(self, path):
+        subprocess.call(["umount", "/dev/mapper/" + self.name])
+        subprocess.call(["cryptsetup", "luksClose", self.name])
+
 def main():
     if not os.path.exists(configfile):
         write_json_file(configfile, dict(volumes = dict()))
@@ -56,6 +64,9 @@ def main():
         if len(f) > 0:
             start_watching_disk_file(f, TruecryptFileHandler())
             print f
+
+    luksvolumes = [ x.encode('ascii','replace') for (x,y) in known.iteritems() if y == "luks" ]
+
     logger.info("initialized")
 
 if __name__ == '__main__':
