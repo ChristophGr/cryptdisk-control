@@ -66,7 +66,10 @@ def main():
             print f
 
     luksvolumes = [ x.encode('ascii','replace') for (x,y) in known.iteritems() if y == "luks" ]
-
+    for f in luksvolumes:
+        if len(f) > 0:
+            start_watching_disk_file(f, LuksHandler())
+            print f
     logger.info("initialized")
 
 if __name__ == '__main__':
