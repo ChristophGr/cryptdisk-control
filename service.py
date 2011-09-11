@@ -51,7 +51,7 @@ class LuksHandler:
         password = keychain.get_password(path)
         self.name = mount_luks_volume(path, password)
     def on_delete(self, path):
-        luksclosecommand = ["sudo", "crypt-umount.sh", name]
+        luksclosecommand = ["sudo", "crypt-umount.sh", self.name]
         subprocess.call(luksclosecommand)
 
 def main():
