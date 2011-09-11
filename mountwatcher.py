@@ -93,11 +93,8 @@ def mount_luks_volume(path, password):
         logger.error("cannot mount volume, missing password")
         return False
     name = find_name()
-    luksopencommand = ["cryptsetup", "luksOpen", path, name]
+    luksopencommand = ["crypt-mount.sh", path, name, password]
     subprocess.call(luksopencommand)
-    os.mkdir("/media/" + name)
-    mountcommand = ["mount", "/dev/mapper/" + name, "/media/" + name ]
-    subprocess.call(mountcommand)
     return name
 
 

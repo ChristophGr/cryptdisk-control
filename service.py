@@ -51,9 +51,8 @@ class LuksHandler:
         password = keychain.get_password(path)
         self.name = mount_luks_volume(path, password)
     def on_delete(self, path):
-        subprocess.call(["umount", "/dev/mapper/" + self.name])
-        subprocess.call(["cryptsetup", "luksClose", self.name])
-        os.rmdir("/media/" self.name)
+        luksclosecommand = ["crypt-umount.sh", name]
+        subprocess.call(luksclosecommand)
 
 def main():
     if not os.path.exists(configfile):
