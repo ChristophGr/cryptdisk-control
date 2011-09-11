@@ -14,3 +14,7 @@ if True:
     formatter = logging.Formatter('%(asctime)-15s %(module)s:%(lineno)s %(levelname)s %(message)s')
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr)
+
+
+if __name__ == "__main__":
+    logger.info("bla")
