@@ -15,14 +15,33 @@ from mountwatcher import *
 
 from config import *
 
+def try_get_password():
+    if hasX():
+        from xutils import *
+        logger.info("get password from dialog")
+        password = get_password_from_dialog()
+        logger.info("read %s from dialog" % password)
+        return password
+
+def ask_password_and_mount(path):
+    password = ""
+    logger.info("ask_password_and_mount:")
+    while password != None:
+        password = try_get_password()
+        if mount_volume(path, password):
+            keychain.store_password(path, password)
+            break
+
 class TruecryptFileHandler:
     def on_create(self, path):
         password = keychain.get_password(path)
         if password == None:
-            logger.warn("password not found in keyring")
-            return
-        mount_volume(path, password)
-        logger.info("mounted path %s" % path)
+            ask_password_and_mount(path)
+        if mount_volume(path, password):
+            logger.info("mounted path %s" % path)
+        else:
+            ask_password_and_mount(path)
+
     def on_delete(self, path):
         subprocess.call(["truecrypt", "-d", path])
         logger.info("deleted path %s " % path)
