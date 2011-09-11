@@ -22,8 +22,7 @@ def initial_mount(volume, password):
     if path == None:
         path = volume
     save_truecrypt_device(path)
-    result = mount_volume(path, password)
-    if result > 0:
+    if not mount_volume(path, password):
         raise Exception("failed to mount volume")
 
     keychain.store_password(path, password)
