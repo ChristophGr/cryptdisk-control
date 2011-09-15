@@ -9,7 +9,7 @@ def get_password_from_dialog(message = "Enter password", message2 = ""):
         None,
         gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
         gtk.MESSAGE_QUESTION,
-        gtk.BUTTONS_OK,
+        gtk.BUTTONS_OK_CANCEL,
         None)
     dialog.set_markup(message)
     #create the text input field
