@@ -6,7 +6,7 @@ import subprocess
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(module)s:%(lineno)s %(levelname)s %(message)s')
 logger = logging.getLogger("crypt-control")
-logger.setLevel("DEBUG")
+logger.setLevel(logging.DEBUG)
 
 #if(subprocess.call("tty -s") > 0):
 if True:
