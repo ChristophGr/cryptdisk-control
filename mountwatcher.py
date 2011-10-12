@@ -76,7 +76,7 @@ def mount_volume(path, password):
     if password == None:
         logger.error("cannot mount volume, missing password")
         return False
-    command = ["truecrypt", "-t", "--non-interactive", "--fs-options=user,umask=777", "--mount", path, "-p", password]
+    command = ["truecrypt", "-t", "--non-interactive", "--fs-options=user,umask=000", "--mount", path, "-p", password]
     logger.debug(" ".join(command))
     return subprocess.call(command) == 0
 
