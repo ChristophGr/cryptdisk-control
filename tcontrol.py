@@ -28,6 +28,9 @@ def initial_mount(volume, password):
     keychain.store_password(path, password)
 
 def main():
+    if len(sys.argv) < 2:
+        print("usage: ", sys.argv[0], "<device-file>")
+        return
     if not os.path.exists(configfile):
         logger.info("creating configfile {}".format(configfile))
         write_json_file(configfile, dict(truecryptvolumes = []))

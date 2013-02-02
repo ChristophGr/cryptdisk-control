@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 from utils import *
@@ -15,22 +15,9 @@ from mountwatcher import *
 
 from config import *
 
-def try_get_password():
-    if hasX():
-        from xutils import get_password_from_dialog
-        logger.info("get password from dialog")
-        password = get_password_from_dialog()
-        logger.info("read %s from dialog" % password)
-        return password
-
 def ask_password_and_mount(path):
-    password = ""
-    logger.info("ask_password_and_mount:")
-    while password != None:
-        password = try_get_password()
-        if mount_volume(path, password):
-            keychain.store_password(path, password)
-            break
+    print("NYI")
+    raise Exception("NYI")
 
 class TruecryptFileHandler:
     def on_create(self, path):
@@ -46,14 +33,6 @@ class TruecryptFileHandler:
         subprocess.call(["truecrypt", "-d", path])
         logger.info("deleted path %s " % path)
 
-class LuksHandler:
-    def on_create(self, path):
-        password = keychain.get_password(path)
-        self.name = mount_luks_volume(path, password)
-    def on_delete(self, path):
-        luksclosecommand = ["sudo", "crypt-umount.sh", self.name]
-        subprocess.call(luksclosecommand)
-
 def main():
     if not os.path.exists(configfile):
         write_json_file(configfile, dict(volumes = dict()))
@@ -63,12 +42,6 @@ def main():
     for f in truecryptvolumes:
         if len(f) > 0:
             start_watching_disk_file(f, TruecryptFileHandler())
-            print f
-
-    luksvolumes = [ x.encode('ascii','replace') for (x,y) in known.iteritems() if y == "luks" ]
-    for f in luksvolumes:
-        if len(f) > 0:
-            start_watching_disk_file(f, LuksHandler())
             print f
     logger.info("initialized")
 

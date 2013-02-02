@@ -87,17 +87,6 @@ def find_name():
         i = i + 1
     return base + str(i)
 
-def mount_luks_volume(path, password):
-    logger.info("mounting %s with pw %s" % (path, "****"))
-    if password == None:
-        logger.error("cannot mount volume, missing password")
-        return False
-    name = find_name()
-    luksopencommand = ["sudo", "crypt-mount.sh", path, name, password]
-    subprocess.call(luksopencommand)
-    return name
-
-
 def main():
     print find_name()
 
